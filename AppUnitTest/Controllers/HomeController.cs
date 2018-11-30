@@ -23,6 +23,11 @@ namespace AppUnitTest.Controllers
 
         public async Task<ActionResult> Index()
         {
+            var model = repo.GetComputerList();
+            if (model.Count > 0)
+                ViewBag.Message = String.Format("DB has {0} objects", model.Count);
+
+
             var list = await repo.AllComputersAsync();
             return View(list);
         }
