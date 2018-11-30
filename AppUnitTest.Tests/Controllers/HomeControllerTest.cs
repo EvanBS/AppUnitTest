@@ -2,6 +2,9 @@
 using AppUnitTest.Controllers;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using Moq;
+using AppUnitTest.Models;
+using System.Collections.Generic;
 
 namespace AppUnitTest.Tests.Controllers
 {
@@ -13,14 +16,15 @@ namespace AppUnitTest.Tests.Controllers
         public async Task IndexViewModelNotNullAsync()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var mock = new Mock<IRepository>();
+            mock.Setup(a => a.GetComputerList()).Returns(new List<Computer>());
+            HomeController controller = new HomeController(mock.Object);
 
             // Act
             var res = await controller.Index() as ViewResult;
-            
-            // Assert
-            Assert.IsNotNull(res.Model);
         }
+
+
 
     }
 }
